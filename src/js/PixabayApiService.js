@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../node_modules/axios';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const axios = require('axios').default;
