@@ -2,7 +2,6 @@ import './saas/index.scss';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Pixabay from './js/PixabayApiService';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const lihgtBoxOptions = { captionDelay: 250, scrollZoom: false };
 const lightbox = new SimpleLightbox('.gallery .photo-card', lihgtBoxOptions);
@@ -17,39 +16,29 @@ searchFormEl.addEventListener('submit', handleFormSubmit);
 
 function handleFormSubmit(e) {
   e.preventDefault();
-  pixabay.refreshMarkup();
-  pixabay.page = 1;
-  pixabay.q = searchInput.value; // не виходить дістатися через e.target ???
 
-  pixabay.getImages().then(images => {
-    console.log('im -->', images);
+  const userQuery = searchInput.value.trim();
 
-    if (images.data.hits.length === 0) {
-      notifyNoData();
-    } else {
-      pixabay.page += 1;
+  if (userQuery === '') {
+    pixabay.notifyEmptyQuery();
+  } else {
+    pixabay.q = searchInput.value; // не виходить дістатися через e.target ???
+    pixabay.resetPage();
 
-      console.log(images.data.hits);
-      pixabay.renderMarkup(images.data.hits);
-      return images.data.hits; // Нужен ли тут Catch ????
-    }
-  });
+    pixabay.getImages().then(images => {
+      if (images.length === 0) {
+        pixabay.notifyNoData();
+      } else {
+        pixabay.renderMarkup(images);
+      }
+    });
+
+    pixabay.refreshMarkup();
+  }
 }
 
 loadMoreBtnEl.addEventListener('click', handleLoadMoreBtnClick);
 
 function handleLoadMoreBtnClick(e) {
-  pixabay.getImages().then(images => {
-    console.log(images.data.hits);
-    pixabay.page += 1;
-
-    pixabay.renderMarkup(images.data.hits);
-    return images.data.hits; // Нужен ли тут Catch ????
-  });
-}
-
-function notifyNoData() {
-  Notify.failure(
-    'Sorry, there are no images matching your search query. Please try again.'
-  );
+  pixabay.getImages().then(images => pixabay.renderMarkup(images));
 }

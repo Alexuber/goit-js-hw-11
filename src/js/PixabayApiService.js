@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const API_KEY = '33015202-198cac1ea48a9228f9ef5fb5a';
 const BASE_URL = 'https://pixabay.com/api/';
@@ -17,7 +18,7 @@ const galleryEl = document.querySelector('.gallery');
 export default class Pixabay {
   constructor() {
     this.key = API_KEY;
-    this.q = 'flowers';
+    this.q = '';
     // this.image_type = 'photo';
     // this.orientation = 'horizontal';
     // this.safesearch = true;
@@ -32,6 +33,15 @@ export default class Pixabay {
       )
       .then(function (response) {
         return response;
+      })
+      .then(images => {
+        console.log('im -->', images);
+
+        this.incrementPage();
+
+        console.log(images.data.hits);
+
+        return images.data.hits;
       })
       .catch(function (error) {
         console.log(error);
@@ -72,5 +82,20 @@ export default class Pixabay {
   }
   refreshMarkup() {
     galleryEl.innerHTML = '';
+  }
+  resetPage() {
+    this.page = 1;
+  }
+  incrementPage() {
+    this.page += 1;
+  }
+
+  notifyNoData() {
+    Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.'
+    );
+  }
+  notifyEmptyQuery() {
+    Notify.warning('Searching field is empty!');
   }
 }
