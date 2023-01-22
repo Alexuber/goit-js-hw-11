@@ -25,13 +25,13 @@ export default class Pixabay {
     // this.orientation = 'horizontal';
     // this.safesearch = true;
     this.page = 1;
-    this.per_page = 40;
+    this.per_page = 9;
   }
 
   getImages() {
     return axios
       .get(
-        `${BASE_URL}?key=${API_KEY}&q=${this.q}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=9`
+        `${BASE_URL}?key=${API_KEY}&q=${this.q}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=${this.per_page}`
       )
       .then(function (response) {
         return response;

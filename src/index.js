@@ -1,4 +1,5 @@
 import './saas/index.scss';
+import './js/btn-up.js';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Pixabay from './js/PixabayApiService';
@@ -50,7 +51,7 @@ function handleLoadMoreBtnClick(e) {
   pixabay.disable();
   pixabay.getImages().then(images => {
     pixabay.renderMarkup(images);
-    simpleLightbox = new SimpleLightbox('.gallery a', lihgtBoxOptions);
+    simpleLightbox.refresh();
     pixabay.enable();
     pixabay.notifySucces(images.length);
   });
