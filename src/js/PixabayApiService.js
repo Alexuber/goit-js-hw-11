@@ -6,6 +6,8 @@ const BASE_URL = 'https://pixabay.com/api/';
 const axios = require('axios');
 
 const galleryEl = document.querySelector('.gallery');
+const loadMoreBtnEl = document.querySelector('.load-more');
+const spinnerEl = document.querySelector('.spinner-border');
 
 // export const searchParams = new URLSearchParams({
 //   key: API_KEY,
@@ -29,7 +31,7 @@ export default class Pixabay {
   getImages() {
     return axios
       .get(
-        `${BASE_URL}?key=${API_KEY}&q=${this.q}&image_type=photo&orientation=$horizontal$safesearch=true&page=${this.page}&per_page=40`
+        `${BASE_URL}?key=${API_KEY}&q=${this.q}&image_type=photo&orientation=$horizontal$safesearch=true&page=${this.page}&per_page=4`
       )
       .then(function (response) {
         return response;
@@ -97,5 +99,26 @@ export default class Pixabay {
   }
   notifyEmptyQuery() {
     Notify.warning('Searching field is empty!');
+  }
+
+  notifySucces(totalHits) {
+    Notify.success(`Hooray! We found ${totalHits} images.`);
+  }
+
+  enable() {
+    loadMoreBtnEl.disabled = false;
+    spinnerEl.classList.add('is-hidden');
+    loadMoreBtnEl.textContent = 'Load More';
+  }
+  disable() {
+    loadMoreBtnEl.disabled = true;
+    spinnerEl.classList.remove('is-hidden');
+    loadMoreBtnEl.textContent = 'Loading';
+  }
+  show() {
+    loadMoreBtnEl.classList.remove('is-hidden');
+  }
+  hide() {
+    loadMoreBtnEl.classList.add('is-hidden');
   }
 }

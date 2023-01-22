@@ -3,8 +3,9 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Pixabay from './js/PixabayApiService';
 
+const throttle = require('throttle');
 const lihgtBoxOptions = { captionDelay: 250, scrollZoom: false };
-const lightbox = new SimpleLightbox('.gallery .photo-card', lihgtBoxOptions);
+const lightbox = new SimpleLightbox('.gallery a', lihgtBoxOptions);
 const pixabay = new Pixabay();
 
 const searchFormEl = document.querySelector('.search-form');
@@ -12,11 +13,14 @@ const searchBtnEl = document.querySelector('.search-btn');
 const searchInput = document.querySelector('.search-txt');
 const loadMoreBtnEl = document.querySelector('.load-more');
 
+pixabay.hide();
+
 searchFormEl.addEventListener('submit', handleFormSubmit);
 
 function handleFormSubmit(e) {
   e.preventDefault();
-
+  throttle(pixabay.disable(), 500);
+  pixabay.enable();
   const userQuery = searchInput.value.trim();
 
   if (userQuery === '') {
@@ -30,15 +34,22 @@ function handleFormSubmit(e) {
         pixabay.notifyNoData();
       } else {
         pixabay.renderMarkup(images);
+        pixabay.notifySucces(images.length);
       }
     });
 
     pixabay.refreshMarkup();
+    pixabay.show();
   }
 }
 
 loadMoreBtnEl.addEventListener('click', handleLoadMoreBtnClick);
 
 function handleLoadMoreBtnClick(e) {
-  pixabay.getImages().then(images => pixabay.renderMarkup(images));
+  pixabay.disable();
+  pixabay.getImages().then(images => {
+    pixabay.renderMarkup(images);
+    pixabay.enable();
+    pixabay.notifySucces(images.length);
+  });
 }
