@@ -18,15 +18,17 @@ export default class Pixabay {
   constructor() {
     this.key = API_KEY;
     this.q = 'flowers';
-    this.image_type = 'photo';
-    this.orientation = 'horizontal';
-    this.safesearch = true;
+    // this.image_type = 'photo';
+    // this.orientation = 'horizontal';
+    // this.safesearch = true;
+    this.page = 1;
+    this.per_page = 40;
   }
 
   getImages() {
     return axios
       .get(
-        `${BASE_URL}?key=${API_KEY}&q=${this.q}&image_type=${this.image_type}&orientation=${this.orientation}$safesearch=${this.safesearch}`
+        `${BASE_URL}?key=${API_KEY}&q=${this.q}&image_type=photo&orientation=$horizontal$safesearch=true&page=${this.page}&per_page=40`
       )
       .then(function (response) {
         return response;
@@ -67,5 +69,8 @@ export default class Pixabay {
       )
       .join('');
     galleryEl.insertAdjacentHTML('beforeend', markup);
+  }
+  refreshMarkup() {
+    galleryEl.innerHTML = '';
   }
 }
