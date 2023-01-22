@@ -6,7 +6,6 @@ import Pixabay from './js/PixabayApiService';
 
 const lihgtBoxOptions = { captionDelay: 250, scrollZoom: false };
 let simpleLightbox;
-// const simpleLightbox = new SimpleLightbox('.gallery a', lihgtBoxOptions);
 const pixabay = new Pixabay();
 
 const searchFormEl = document.querySelector('.search-form');
@@ -56,3 +55,12 @@ function handleLoadMoreBtnClick(e) {
     pixabay.notifySucces(images.length);
   });
 }
+
+// fix focus-border in gallery-slider
+// hide and show load-more btn
+// make spinner on load-more btn
+// fix blue bg on load-more btn
+// Сделать плавную прокрутку страницы после запроса и отрисовки
+// make infinite-scroll - 2nd variant
+// add alert with end of search on last page
+// При повторном сабмите формы кнопка сначала прячется, а после запроса опять отображается.

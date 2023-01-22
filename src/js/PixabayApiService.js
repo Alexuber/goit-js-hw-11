@@ -25,7 +25,7 @@ export default class Pixabay {
     // this.orientation = 'horizontal';
     // this.safesearch = true;
     this.page = 1;
-    this.per_page = 9;
+    this.per_page = 100;
   }
 
   getImages() {
