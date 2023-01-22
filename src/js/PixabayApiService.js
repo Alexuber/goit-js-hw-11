@@ -31,7 +31,7 @@ export default class Pixabay {
   getImages() {
     return axios
       .get(
-        `${BASE_URL}?key=${API_KEY}&q=${this.q}&image_type=photo&orientation=$horizontal$safesearch=true&page=${this.page}&per_page=4`
+        `${BASE_URL}?key=${API_KEY}&q=${this.q}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=9`
       )
       .then(function (response) {
         return response;

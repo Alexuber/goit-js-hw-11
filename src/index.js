@@ -3,9 +3,9 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Pixabay from './js/PixabayApiService';
 
-const throttle = require('throttle');
 const lihgtBoxOptions = { captionDelay: 250, scrollZoom: false };
-const lightbox = new SimpleLightbox('.gallery a', lihgtBoxOptions);
+let simpleLightbox;
+// const simpleLightbox = new SimpleLightbox('.gallery a', lihgtBoxOptions);
 const pixabay = new Pixabay();
 
 const searchFormEl = document.querySelector('.search-form');
@@ -19,7 +19,7 @@ searchFormEl.addEventListener('submit', handleFormSubmit);
 
 function handleFormSubmit(e) {
   e.preventDefault();
-  throttle(pixabay.disable(), 500);
+  pixabay.disable();
   pixabay.enable();
   const userQuery = searchInput.value.trim();
 
@@ -34,6 +34,7 @@ function handleFormSubmit(e) {
         pixabay.notifyNoData();
       } else {
         pixabay.renderMarkup(images);
+        simpleLightbox = new SimpleLightbox('.gallery a', lihgtBoxOptions);
         pixabay.notifySucces(images.length);
       }
     });
@@ -49,6 +50,7 @@ function handleLoadMoreBtnClick(e) {
   pixabay.disable();
   pixabay.getImages().then(images => {
     pixabay.renderMarkup(images);
+    simpleLightbox = new SimpleLightbox('.gallery a', lihgtBoxOptions);
     pixabay.enable();
     pixabay.notifySucces(images.length);
   });
