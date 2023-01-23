@@ -171,17 +171,30 @@ img {
   }
 }
 
-.spinner-border {
-  width: 20px;
-  height: 20px;
-  margin-right: 5px;
-  display: block;
-}
-
 .info-item b {
   padding-bottom: 4px;
 }
 
 .is-hidden {
   display: none;
+}
+
+.start {
+  padding-top: 50px;
+}
+
+.start-title {
+  font-size: 26px;
+  text-align: center;
+  font-family: monospace;
+}
+
+.start-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.button:focus {
+  outline: none;
 }
