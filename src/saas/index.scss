@@ -32,7 +32,7 @@ img {
   background: #666666;
   border-radius: 40px;
   padding: 10px;
-  height: 60px;
+  height: 40px;
 }
 .search-box:hover > .search-txt {
   width: 240px;
@@ -153,21 +153,6 @@ img {
   }
   &:focus {
     border: 2px solid #209789;
-  }
-}
-
-.btn-primary {
-  &:not(:disabled):not(.disabled):active {
-    background-color: #209789;
-    opacity: 0.6;
-    border: 2px solid #209789;
-  }
-  &:focus {
-    box-shadow: none;
-  }
-  &:not(:disabled):not(.disabled):active:focus,
-  .show > .btn-primary.dropdown-toggle:focus {
-    box-shadow: 0 0 0 0.2rem #209789;
   }
 }
 
