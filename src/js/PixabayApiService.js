@@ -6,7 +6,6 @@ const BASE_URL = 'https://pixabay.com/api/';
 
 const galleryEl = document.querySelector('.gallery');
 const loadMoreBtnEl = document.querySelector('.load-more');
-const spinnerEl = document.querySelector('.spinner-border');
 
 export default class Pixabay {
   constructor() {
@@ -16,7 +15,7 @@ export default class Pixabay {
     this.orientation = 'horizontal';
     this.safesearch = true;
     this.page = 1;
-    this.per_page = 9;
+    this.per_page = 40;
   }
 
   getImages() {
@@ -25,17 +24,15 @@ export default class Pixabay {
         `${BASE_URL}?key=${API_KEY}&q=${this.q}&image_type=${this.image_type}&orientation=${this.orientation}&safesearch=${this.safesearch}&page=${this.page}&per_page=${this.per_page}`
       )
       .then(function (response) {
-        console.log('🆑 response', response);
-
         return response;
       })
+
       .then(images => {
-        console.log('images -->', images);
-
+        if (this.page > Math.ceil(images.data.totalHits / this.per_page)) {
+          this.hide();
+          return this.notifyEndOfSearchResults();
+        }
         this.incrementPage();
-
-        console.log(images.data.hits);
-
         return images.data.hits;
       })
       .catch(function (error) {
@@ -105,12 +102,10 @@ export default class Pixabay {
 
   enable() {
     loadMoreBtnEl.disabled = false;
-    spinnerEl.classList.add('is-hidden');
     loadMoreBtnEl.textContent = 'Load More';
   }
   disable() {
     loadMoreBtnEl.disabled = true;
-    spinnerEl.classList.remove('is-hidden');
     loadMoreBtnEl.textContent = 'Loading';
   }
   show() {
