@@ -14,7 +14,6 @@
       crossorigin="anonymous"
     />
     <title>Find images</title>
-    <!-- <link rel="stylesheet" href="./sass/index.scss" /> -->
     <script type="module" src="./index.js"></script>
   </head>
   <body>
@@ -32,26 +31,10 @@
         </button>
       </div>
     </form>
-    <div class="gallery">
-      <!-- <a href="${largeImageURL}" class="photo-card" title="">
-        <img
-          class="photo-card__img"
-          src="${webformatURL}"
-          alt="${tags}"
-          loading="lazy"
-          width="300px"
-        />
-        <div class="info">
-          <p class="info-item"><b>Likes</b>${likes}</p>
-          <p class="info-item"><b>Views</b>${views}</p>
-          <p class="info-item"><b>Comments</b>${comments}</p>
-          <p class="info-item"><b>Downloads</b>${downloads}</p>
-        </div>
-      </a> -->
-    </div>
-    <button class="load-more btn btn-primary" type="button" disabled>
+    <div class="gallery"></div>
+    <button class="load-more btn btn-primary is-hidden" type="button" disabled>
       <span
-        class="spinner-border spinner-border-sm"
+        class="spinner-border spinner-border-sm is-hidden"
         role="status"
         aria-hidden="true"
       ></span>

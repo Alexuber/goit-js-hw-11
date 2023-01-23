@@ -19,8 +19,9 @@ searchFormEl.addEventListener('submit', handleFormSubmit);
 
 function handleFormSubmit(e) {
   e.preventDefault();
-  pixabay.disable();
   pixabay.enable();
+  // pixabay.disable();
+  // pixabay.enable();
   const userQuery = searchInput.value.trim();
 
   if (userQuery === '') {
@@ -51,7 +52,6 @@ function handleLoadMoreBtnClick(e) {
   pixabay.getImages().then(images => {
     pixabay.renderMarkup(images);
     simpleLightbox.refresh();
-    pixabay.enable();
     pixabay.notifySucces(images.length);
   });
 }
@@ -59,7 +59,6 @@ function handleLoadMoreBtnClick(e) {
 // fix focus-border in gallery-slider
 // hide and show load-more btn
 // make spinner on load-more btn
-// fix blue bg on load-more btn
 // Сделать плавную прокрутку страницы после запроса и отрисовки
 // make infinite-scroll - 2nd variant
 // add alert with end of search on last page
