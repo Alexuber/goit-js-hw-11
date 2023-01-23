@@ -19,15 +19,13 @@ searchFormEl.addEventListener('submit', handleFormSubmit);
 
 function handleFormSubmit(e) {
   e.preventDefault();
-  pixabay.enable();
-  // pixabay.disable();
-  // pixabay.enable();
+  pixabay.show();
   const userQuery = searchInput.value.trim();
 
   if (userQuery === '') {
     pixabay.notifyEmptyQuery();
   } else {
-    pixabay.q = searchInput.value; // не виходить дістатися через e.target ???
+    pixabay.q = searchInput.value;
     pixabay.resetPage();
 
     pixabay.getImages().then(images => {
@@ -41,7 +39,6 @@ function handleFormSubmit(e) {
     });
 
     pixabay.refreshMarkup();
-    pixabay.show();
   }
 }
 
@@ -53,13 +50,15 @@ function handleLoadMoreBtnClick(e) {
     pixabay.renderMarkup(images);
     simpleLightbox.refresh();
     pixabay.notifySucces(images.length);
+    pixabay.enable();
+    pixabay.slowScroll();
   });
 }
 
 // fix focus-border in gallery-slider
-// hide and show load-more btn
 // make spinner on load-more btn
-// Сделать плавную прокрутку страницы после запроса и отрисовки
 // make infinite-scroll - 2nd variant
 // add alert with end of search on last page
 // При повторном сабмите формы кнопка сначала прячется, а после запроса опять отображается.
+// How add styles of Bootstrap from package
+// why images not all horizontal

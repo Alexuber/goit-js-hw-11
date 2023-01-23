@@ -12,9 +12,9 @@ export default class Pixabay {
   constructor() {
     this.key = API_KEY;
     this.q = '';
-    // this.image_type = 'photo';
-    // this.orientation = 'horizontal';
-    // this.safesearch = true;
+    this.image_type = 'photo';
+    this.orientation = 'horizontal';
+    this.safesearch = true;
     this.page = 1;
     this.per_page = 9;
   }
@@ -22,13 +22,15 @@ export default class Pixabay {
   getImages() {
     return axios
       .get(
-        `${BASE_URL}?key=${API_KEY}&q=${this.q}&image_type=photo&orientation=horizontal&safesearch=true&page=${this.page}&per_page=${this.per_page}`
+        `${BASE_URL}?key=${API_KEY}&q=${this.q}&image_type=${this.image_type}&orientation=${this.orientation}&safesearch=${this.safesearch}&page=${this.page}&per_page=${this.per_page}`
       )
       .then(function (response) {
+        console.log('🆑 response', response);
+
         return response;
       })
       .then(images => {
-        console.log('im -->', images);
+        console.log('images -->', images);
 
         this.incrementPage();
 
@@ -96,6 +98,11 @@ export default class Pixabay {
     Notify.success(`Hooray! We found ${totalHits} images.`);
   }
 
+  notifyEndOfSearchResults() {
+    this.hide();
+    Notify.info("We're sorry, but you've reached the end of search results.");
+  }
+
   enable() {
     loadMoreBtnEl.disabled = false;
     spinnerEl.classList.add('is-hidden');
@@ -111,5 +118,15 @@ export default class Pixabay {
   }
   hide() {
     loadMoreBtnEl.classList.add('is-hidden');
+  }
+  slowScroll() {
+    const { height: cardHeight } = document
+      .querySelector('.gallery')
+      .firstElementChild.getBoundingClientRect();
+
+    window.scrollBy({
+      top: cardHeight * 2,
+      behavior: 'smooth',
+    });
   }
 }
