@@ -45,11 +45,17 @@ function handleFormSubmit(e) {
         if (hits.length === 0) {
           pixabay.notifyNoData();
           startBlockEl.style.display = 'block';
+        } else if (
+          pixabay.options.params.page - 1 >=
+          Math.ceil(totalHits / pixabay.options.params.per_page)
+        ) {
+          pixabay.hide();
+          pixabay.notifyEndOfSearchResults();
         } else {
-          pixabay.renderMarkup(hits);
-          simpleLightbox = new SimpleLightbox('.gallery a', lihgtBoxOptions);
           pixabay.notifySucces(totalHits);
         }
+        pixabay.renderMarkup(hits);
+        simpleLightbox = new SimpleLightbox('.gallery a', lihgtBoxOptions);
       })
       .catch(console.log);
 
@@ -65,18 +71,16 @@ function handleLoadMoreBtnClick(e) {
     .getImages()
     .then(({ hits, totalHits }) => {
       if (
-        pixabay.options.params.page - 1 >
+        pixabay.options.params.page - 1 >=
         Math.ceil(totalHits / pixabay.options.params.per_page)
       ) {
         pixabay.hide();
         pixabay.notifyEndOfSearchResults();
-      } else {
-        pixabay.renderMarkup(hits);
-        simpleLightbox.refresh();
-
-        pixabay.slowScroll();
-        pixabay.enable();
       }
+      pixabay.renderMarkup(hits);
+      simpleLightbox.refresh();
+      pixabay.slowScroll();
+      pixabay.enable();
     })
     .catch(() => {
       pixabay.enable();
