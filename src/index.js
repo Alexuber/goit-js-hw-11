@@ -29,7 +29,7 @@ function handleFormSubmit(e) {
 
     pixabay.show();
     pixabay.enable();
-    pixabay.q = searchInput.value;
+    pixabay.options.params.q = searchInput.value;
     pixabay.resetPage();
 
     pixabay
@@ -57,7 +57,10 @@ function handleLoadMoreBtnClick(e) {
   pixabay
     .getImages()
     .then(({ hits, totalHits }) => {
-      if (pixabay.page - 1 > Math.ceil(totalHits / pixabay.per_page)) {
+      if (
+        pixabay.options.params.page - 1 >
+        Math.ceil(totalHits / pixabay.options.params.per_page)
+      ) {
         pixabay.hide();
         pixabay.notifyEndOfSearchResults();
       } else {

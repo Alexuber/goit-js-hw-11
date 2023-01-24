@@ -9,32 +9,31 @@ const loadMoreBtnEl = document.querySelector('.load-more');
 
 export default class Pixabay {
   constructor() {
-    this.key = API_KEY;
-    this.q = '';
-    this.image_type = 'photo';
-    this.orientation = 'horizontal';
-    this.safesearch = true;
-    this.page = 1;
-    this.per_page = 40;
+    this.options = {
+      baseURL: BASE_URL,
+      params: {
+        key: API_KEY,
+        q: '',
+        image_type: 'photo',
+        orientation: 'horizontal',
+        safesearch: true,
+        page: 1,
+        per_page: 40,
+      },
+    };
   }
 
-  getImages() {
-    return axios
-      .get(
-        `${BASE_URL}?key=${API_KEY}&q=${this.q}&image_type=${this.image_type}&orientation=${this.orientation}&safesearch=${this.safesearch}&page=${this.page}&per_page=${this.per_page}`
-      )
-      .then(response => {
-        if (response.data.hits.length === 0) {
-          this.hide();
-        }
-        this.incrementPage();
+  async getImages() {
+    const response = await axios.get(`${this.options.baseURL}`, this.options);
 
-        return response.data;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    if (response.data.hits.length === 0) {
+      this.hide();
+    }
+    this.incrementPage();
+
+    return response.data;
   }
+
   renderMarkup(arrOfImages) {
     const markup = arrOfImages
       .map(
@@ -72,10 +71,10 @@ export default class Pixabay {
     galleryEl.innerHTML = '';
   }
   resetPage() {
-    this.page = 1;
+    this.options.params.page = 1;
   }
   incrementPage() {
-    this.page += 1;
+    this.options.params.page += 1;
   }
 
   notifyNoData() {
