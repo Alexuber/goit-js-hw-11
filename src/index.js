@@ -14,6 +14,7 @@ const loadMoreBtnEl = document.querySelector('.load-more');
 const startBlockEl = document.querySelector('.start');
 
 pixabay.hide();
+let query = '';
 
 searchFormEl.addEventListener('submit', handleFormSubmit);
 
@@ -21,6 +22,11 @@ function handleFormSubmit(e) {
   e.preventDefault();
 
   const userQuery = searchInput.value.trim();
+
+  if (userQuery === query) {
+    pixabay.notifyAlreadyUploaded();
+    return;
+  }
 
   if (userQuery === '') {
     pixabay.notifyEmptyQuery();
@@ -31,6 +37,7 @@ function handleFormSubmit(e) {
     pixabay.enable();
     pixabay.options.params.q = searchInput.value;
     pixabay.resetPage();
+    query = userQuery;
 
     pixabay
       .getImages()

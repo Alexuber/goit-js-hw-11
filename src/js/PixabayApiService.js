@@ -95,6 +95,12 @@ export default class Pixabay {
     Notify.info("We're sorry, but you've reached the end of search results.");
   }
 
+  notifyAlreadyUploaded() {
+    Notify.warning(
+      'Your images have been found and already have been uploaded!'
+    );
+  }
+
   enable() {
     loadMoreBtnEl.disabled = false;
     loadMoreBtnEl.textContent = 'Load More';
