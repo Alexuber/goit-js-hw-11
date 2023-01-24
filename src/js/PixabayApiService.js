@@ -9,7 +9,7 @@ const loadMoreBtnEl = document.querySelector('.load-more');
 
 export default class Pixabay {
   constructor() {
-    this.options = {
+    (this.options = {
       baseURL: BASE_URL,
       params: {
         key: API_KEY,
@@ -20,7 +20,8 @@ export default class Pixabay {
         page: 1,
         per_page: 40,
       },
-    };
+    }),
+      (this.prevQuery = '');
   }
 
   async getImages() {
