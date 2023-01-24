@@ -28,21 +28,23 @@ function handleFormSubmit(e) {
     startBlockEl.style.display = 'none';
 
     pixabay.show();
+    pixabay.enable();
     pixabay.q = searchInput.value;
     pixabay.resetPage();
 
     pixabay
       .getImages()
-      .then(images => {
-        if (images.length === 0) {
+      .then(({ hits, totalHits }) => {
+        if (hits.length === 0) {
           pixabay.notifyNoData();
+          startBlockEl.style.display = 'block';
         } else {
-          pixabay.renderMarkup(images);
+          pixabay.renderMarkup(hits);
           simpleLightbox = new SimpleLightbox('.gallery a', lihgtBoxOptions);
-          pixabay.notifySucces(images.length);
+          pixabay.notifySucces(totalHits);
         }
       })
-      .catch(() => pixabay.notifyNoData());
+      .catch(console.log);
 
     pixabay.refreshMarkup();
   }
@@ -54,19 +56,19 @@ function handleLoadMoreBtnClick(e) {
   pixabay.disable();
   pixabay
     .getImages()
-    .then(images => {
-      pixabay.renderMarkup(images);
-      simpleLightbox.refresh();
+    .then(({ hits, totalHits }) => {
+      if (pixabay.page - 1 > Math.ceil(totalHits / pixabay.per_page)) {
+        pixabay.hide();
+        pixabay.notifyEndOfSearchResults();
+      } else {
+        pixabay.renderMarkup(hits);
+        simpleLightbox.refresh();
 
-      pixabay.notifySucces(images.length);
-
-      pixabay.slowScroll();
-      pixabay.enable();
+        pixabay.slowScroll();
+        pixabay.enable();
+      }
     })
     .catch(() => {
       pixabay.enable();
     });
 }
-
-// make infinite-scroll - 2nd variant
-// How add styles of Bootstrap from package

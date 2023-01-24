@@ -23,17 +23,13 @@ export default class Pixabay {
       .get(
         `${BASE_URL}?key=${API_KEY}&q=${this.q}&image_type=${this.image_type}&orientation=${this.orientation}&safesearch=${this.safesearch}&page=${this.page}&per_page=${this.per_page}`
       )
-      .then(function (response) {
-        return response;
-      })
-
-      .then(images => {
-        if (this.page > Math.ceil(images.data.totalHits / this.per_page)) {
+      .then(response => {
+        if (response.data.hits.length === 0) {
           this.hide();
-          return this.notifyEndOfSearchResults();
         }
         this.incrementPage();
-        return images.data.hits;
+
+        return response.data;
       })
       .catch(function (error) {
         console.log(error);
