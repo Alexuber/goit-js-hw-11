@@ -1,21 +1,21 @@
 {
-  "name": "goit-js-hw-11",
+  "name": "search-images",
   "version": "2.0.0",
   "description": "",
-  "homepage": "https://Alexuber.github.io/goit-js-hw-11",
+  "homepage": "https://Alexuber.github.io/search-images",
   "scripts": {
     "start": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /goit-js-hw-11/"
+    "build": "parcel build src/*.html --public-url /search-images/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Alexuber/goit-js-hw-11.git"
+    "url": "git+https://github.com/Alexuber/search-images.git"
   },
   "keywords": [],
   "author": "Alexander Repeta <alexander.repeta@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Alexuber/goit-js-hw-11/issues"
+    "url": "https://github.com/Alexuber/search-images/issues"
   },
   "dependencies": {
     "axios": "^1.2.3",
